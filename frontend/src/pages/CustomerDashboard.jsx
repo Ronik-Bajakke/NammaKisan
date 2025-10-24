@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_BASE } from "../config"; // Import API_BASE from config
+import { API_BASE } from "../api.js"; // Import API_BASE from config
 
 const categories = ["All", "Vegetables", "Fruits", "Others"];
 

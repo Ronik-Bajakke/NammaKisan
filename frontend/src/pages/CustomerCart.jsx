@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_BASE } from "../config"; // Make sure you have this file exporting API_BASE
+import { API_BASE } from "../api.js"; // Make sure you have this file exporting API_BASE
 
 const CustomerCart = () => {
   const [cart, setCart] = useState([]);
