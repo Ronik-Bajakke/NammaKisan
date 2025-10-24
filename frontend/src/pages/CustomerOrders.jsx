@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../api";
 
 const CustomerOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -8,69 +9,85 @@ const CustomerOrders = () => {
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch customer profile
+  // --------------------------
+  // Fetch Customer Profile
+  // --------------------------
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
         const token = localStorage.getItem("customerToken");
         if (!token) throw new Error("No token found");
 
-        const res = await axios.get("http://localhost:5000/api/customer/profile", {
+        const res = await axios.get(`${API_BASE}/customer/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCustomer(res.data);
       } catch (err) {
-        console.error("Failed to fetch customer:", err);
+        console.error("❌ Failed to fetch customer:", err);
         localStorage.removeItem("customerToken");
       }
     };
     fetchCustomer();
   }, []);
 
-  // Fetch orders and existing reviews
+  // --------------------------
+  // Fetch Orders + Reviews
+  // --------------------------
   useEffect(() => {
     const fetchOrdersWithReviews = async () => {
       try {
         const token = localStorage.getItem("customerToken");
-        const resOrders = await axios.get("http://localhost:5000/api/orders", {
+        if (!token) throw new Error("No token found");
+
+        const resOrders = await axios.get(`${API_BASE}/orders`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
+        // Sort latest first
         const sortedOrders = resOrders.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
 
         const reviewData = {};
-        for (let order of sortedOrders) {
+        for (const order of sortedOrders) {
           const firstItem = order.items.find((i) => i.productId);
           if (!firstItem) continue;
           const productId = firstItem.productId._id;
 
-          const resReview = await axios.get(
-            `http://localhost:5000/api/reviews?orderId=${order._id}&productId=${productId}`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
+          try {
+            const resReview = await axios.get(
+              `${API_BASE}/reviews?orderId=${order._id}&productId=${productId}`,
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-          if (resReview.data) {
-            reviewData[order._id] = {
-              rating: resReview.data.rating,
-              comment: resReview.data.comment,
-            };
+            if (resReview.data) {
+              reviewData[order._id] = {
+                rating: resReview.data.rating,
+                comment: resReview.data.comment,
+              };
+            }
+          } catch (err) {
+            // Skip if review not found (404)
+            if (err.response?.status !== 404)
+              console.error("Review fetch error:", err);
           }
         }
 
         setOrders(sortedOrders);
         setReviews(reviewData);
       } catch (err) {
-        console.error("Failed to fetch orders or reviews:", err);
+        console.error("❌ Failed to fetch orders or reviews:", err);
       } finally {
         setLoading(false);
       }
     };
+
     fetchOrdersWithReviews();
   }, []);
 
-  // Handle review input changes
+  // --------------------------
+  // Handle Review Input Change
+  // --------------------------
   const handleReviewChange = (orderId, field, value) => {
     setReviewInputs((prev) => ({
       ...prev,
@@ -78,16 +95,17 @@ const CustomerOrders = () => {
     }));
   };
 
-  // Submit a new review
+  // --------------------------
+  // Submit New Review
+  // --------------------------
   const submitReview = async (order) => {
     try {
       if (!customer) return alert("Customer data not loaded");
 
       const { rating = 0, comment = "" } = reviewInputs[order._id] || {};
       if (!rating || rating < 1 || rating > 5)
-        return alert("Please select a rating (1-5 stars)!");
-      if (!comment.trim())
-        return alert("Please write a comment for the review!");
+        return alert("Please select a rating (1–5 stars)");
+      if (!comment.trim()) return alert("Please write a comment");
 
       const token = localStorage.getItem("customerToken");
       const firstItem = order.items.find((i) => i.productId);
@@ -95,7 +113,7 @@ const CustomerOrders = () => {
       const productId = firstItem.productId._id;
 
       await axios.post(
-        "http://localhost:5000/api/reviews",
+        `${API_BASE}/reviews`,
         {
           orderId: order._id,
           productId,
@@ -113,12 +131,14 @@ const CustomerOrders = () => {
       }));
       setReviewInputs((prev) => ({ ...prev, [order._id]: {} }));
     } catch (err) {
-      console.error("Failed to submit review:", err);
+      console.error("❌ Failed to submit review:", err);
       alert(err.response?.data?.message || "Failed to submit review");
     }
   };
 
-  // Star rating component
+  // --------------------------
+  // Star Rating Component
+  // --------------------------
   const StarRating = ({ rating, onChange, readOnly }) => (
     <div className="d-flex gap-1" style={{ cursor: readOnly ? "default" : "pointer" }}>
       {[1, 2, 3, 4, 5].map((star) => (
@@ -133,6 +153,9 @@ const CustomerOrders = () => {
     </div>
   );
 
+  // --------------------------
+  // UI Rendering
+  // --------------------------
   if (loading) return <p className="text-center mt-5">Loading orders...</p>;
 
   if (orders.length === 0)
@@ -175,6 +198,7 @@ const CustomerOrders = () => {
                     {order.status}
                   </span>
                 </div>
+
                 <div className="card-body">
                   <p><strong>Address:</strong> {order.address}</p>
                   <p><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
@@ -206,6 +230,7 @@ const CustomerOrders = () => {
                     ))}
                   </ul>
 
+                  {/* Review Section */}
                   {isDelivered && (
                     <div>
                       {submitted ? (
@@ -240,6 +265,7 @@ const CustomerOrders = () => {
                     </div>
                   )}
 
+                  {/* Cancelled Info */}
                   {isCancelled && (
                     <div className="alert alert-danger mt-3" role="alert">
                       <p className="fw-bold mb-1">❌ This order has been cancelled.</p>
