@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const CustomerNavbar = ({ onResetCategory, customer }) => {
+const CustomerNavbar = ({ onResetCategory }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [search, setSearch] = useState("");
 
-  // Sync search input with URL
+  useEffect(() => {
+    const token = localStorage.getItem("customerToken");
+    if (!token) {
+      navigate("/", { replace: true });
+      return;
+    }
+    setIsAuthorized(true);
+  }, [navigate]);
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setSearch(params.get("search") || "");
@@ -19,7 +28,7 @@ const CustomerNavbar = ({ onResetCategory, customer }) => {
 
   const goToAllProducts = () => {
     if (onResetCategory) onResetCategory(); // Reset category in dashboard
-    navigate("/customer/dashboard");
+    navigate("/customer/dashboard", { replace: true });
   };
 
   const handleSearchSubmit = (e) => {
@@ -27,12 +36,12 @@ const CustomerNavbar = ({ onResetCategory, customer }) => {
     navigate(
       search.trim()
         ? `/customer/dashboard?search=${encodeURIComponent(search)}`
-        : "/customer/dashboard"
+        : "/customer/dashboard",
+      { replace: true }
     );
   };
 
-  // Only render Navbar if customer is loaded
-  if (!customer) return null;
+  if (!isAuthorized) return null;
 
   return (
     <nav
