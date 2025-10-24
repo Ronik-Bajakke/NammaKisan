@@ -38,6 +38,7 @@ app.use("/api/reviews", reviewRoutes);
 
 app.use("/api/farmer", farmerAuthRoutes); 
 app.use("/api/farmer", farmerRoutes);    
+app.use("/api/customer", customerRoutes);
 
 
 app.use("/api/admin/orders", adminOrderRoutes);
