@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import LoginChoice1 from "../assets/images/LoginChoice.jpg";
+import { API_BASE } from "../api"; // import your base URL
 
 const CustomerSignup = () => {
   const navigate = useNavigate();
@@ -25,12 +26,14 @@ const CustomerSignup = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/customer/signup", {
+      // Use API_BASE from api.js
+      const res = await axios.post(`${API_BASE}/customer/signup`, {
         name: formData.name,
         email: formData.email,
         mobile: formData.mobile,
         password: formData.password,
       });
+
       localStorage.setItem("customerToken", res.data.token);
       navigate("/customer/dashboard");
     } catch (error) {
