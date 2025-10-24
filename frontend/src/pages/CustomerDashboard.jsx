@@ -15,6 +15,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
   const [cart, setCart] = useState({});
   const [hoveredCard, setHoveredCard] = useState(null); // track hover
 
+  // Reset category on signal
   useEffect(() => {
     if (resetCategorySignal) {
       setSelectedCategory("All");
@@ -24,6 +25,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
     }
   }, [resetCategorySignal]);
 
+  // Fetch customer profile
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -36,13 +38,19 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
         setCustomer(res.data);
         setIsAuthorized(true);
       } catch (error) {
-        localStorage.removeItem("customerToken");
-        navigate("/", { replace: true });
+        console.error("Profile fetch failed:", error.response?.status || error.message);
+
+        // Only logout if token is invalid
+        if (error.response?.status === 401) {
+          localStorage.removeItem("customerToken");
+          navigate("/", { replace: true });
+        }
       }
     };
     fetchProfile();
   }, [navigate]);
 
+  // Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -50,10 +58,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
         const searchTerm = queryParams.get("search") || "";
         const categoryParam = selectedCategory !== "All" ? `&category=${selectedCategory}` : "";
 
-        const res = await axios.get(
-          `${API_BASE}/products?search=${searchTerm}${categoryParam}`
-        );
-
+        const res = await axios.get(`${API_BASE}/products?search=${searchTerm}${categoryParam}`);
         const availableProducts = res.data.filter(
           (p) => (p.quantity || 0) - (p.quantitySold || 0) > 0 && !p.isDeleted
         );
@@ -65,6 +70,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
     fetchProducts();
   }, [location.search, selectedCategory]);
 
+  // Fetch cart
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -189,8 +195,8 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
                     boxShadow: isHovered
                       ? "0 12px 24px rgba(0,0,0,0.2)" 
                       : "0 4px 6px rgba(0,0,0,0.1)",
-                    opacity: isHovered ? 0.9 : 1, 
-                    transform: isHovered ? "translateY(-5px)" : "translateY(0)", 
+                    opacity: isHovered ? 0.9 : 1,
+                    transform: isHovered ? "translateY(-5px)" : "translateY(0)",
                   }}
                   onMouseEnter={() => setHoveredCard(product._id)}
                   onMouseLeave={() => setHoveredCard(null)}
@@ -204,7 +210,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
                         height: "230px",
                         objectFit: "cover",
                         transition: "opacity 0.2s ease-in-out",
-                        opacity: isHovered ? 0.85 : 1, 
+                        opacity: isHovered ? 0.85 : 1,
                       }}
                     />
                   )}
