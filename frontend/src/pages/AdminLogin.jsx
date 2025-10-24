@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import LoginChoice1 from "../assets/images/LoginChoice.jpg";
-import { API_BASE } from "../api"; // use API_BASE from .env
+import "./AdminLogin.css"; // ✅ Import CSS
+import { API_BASE } from "../api";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +21,6 @@ const AdminLogin = () => {
       });
 
       localStorage.setItem("token", res.data.token);
-
       alert("Login Successful ✅");
       navigate("/admin/dashboard");
     } catch (err) {
@@ -32,23 +31,13 @@ const AdminLogin = () => {
   };
 
   return (
-    <div
-      className="position-fixed top-0 start-0 d-flex justify-content-center align-items-center"
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundImage: `url(${LoginChoice1})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        zIndex: 1,
-      }}
-    >
+    <div className="admin-login-page">
       <div
-        className="card p-5 shadow-lg bg-white bg-opacity-75 position-relative"
+        className="card p-5 shadow-lg bg-white bg-opacity-75"
         style={{
           borderRadius: "20px",
-          minWidth: "400px",
+          width: "90%",
+          maxWidth: "400px",
           zIndex: 2,
         }}
       >
