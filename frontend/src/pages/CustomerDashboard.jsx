@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../config"; // Import API_BASE from config
 
 const categories = ["All", "Vegetables", "Fruits", "Others"];
 
@@ -29,7 +30,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
         const token = localStorage.getItem("customerToken");
         if (!token) throw new Error("No token");
 
-        const res = await axios.get("http://localhost:5000/api/customer/profile", {
+        const res = await axios.get(`${API_BASE}/customer/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCustomer(res.data);
@@ -50,7 +51,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
         const categoryParam = selectedCategory !== "All" ? `&category=${selectedCategory}` : "";
 
         const res = await axios.get(
-          `http://localhost:5000/api/products?search=${searchTerm}${categoryParam}`
+          `${API_BASE}/products?search=${searchTerm}${categoryParam}`
         );
 
         const availableProducts = res.data.filter(
@@ -68,7 +69,7 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
     const fetchCart = async () => {
       try {
         const token = localStorage.getItem("customerToken");
-        const res = await axios.get("http://localhost:5000/api/cart", {
+        const res = await axios.get(`${API_BASE}/cart`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const cartData = {};
@@ -99,13 +100,13 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
       let res;
       if (cart[productId]) {
         res = await axios.put(
-          `http://localhost:5000/api/cart/update/${productId}`,
+          `${API_BASE}/cart/update/${productId}`,
           { action: "increase" },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         res = await axios.post(
-          "http://localhost:5000/api/cart/add",
+          `${API_BASE}/cart/add`,
           { productId, quantity: 1 },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -127,12 +128,12 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
       let res;
       if (cart[productId] > 1) {
         res = await axios.put(
-          `http://localhost:5000/api/cart/update/${productId}`,
+          `${API_BASE}/cart/update/${productId}`,
           { action: "decrease" },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
-        res = await axios.delete(`http://localhost:5000/api/cart/remove/${productId}`, {
+        res = await axios.delete(`${API_BASE}/cart/remove/${productId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -151,7 +152,6 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
 
   return (
     <div className="container my-4">
-      
       <div className="mb-4 text-center">
         {categories.map((cat, idx) => (
           <button
@@ -171,7 +171,6 @@ const CustomerDashboard = ({ resetCategorySignal }) => {
         Welcome, {customer?.name || "Customer"}!
       </h2>
 
-      
       <div className="row g-4">
         {products.length > 0 ? (
           products.map((product) => {

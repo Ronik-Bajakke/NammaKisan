@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { API_BASE } from "../config"; // Make sure you have this file exporting API_BASE
 
 const CustomerCart = () => {
   const [cart, setCart] = useState([]);
@@ -12,7 +12,7 @@ const CustomerCart = () => {
     const fetchCart = async () => {
       try {
         const token = localStorage.getItem("customerToken");
-        const res = await axios.get("http://localhost:5000/api/cart", {
+        const res = await axios.get(`${API_BASE}/cart`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCart(res.data.items || []);
@@ -23,7 +23,6 @@ const CustomerCart = () => {
     fetchCart();
   }, []);
 
-  
   useEffect(() => {
     const newTotal = cart.reduce(
       (acc, item) => acc + item.productId.pricePerKg * item.quantity,
@@ -35,10 +34,9 @@ const CustomerCart = () => {
   const handleRemove = async (productId) => {
     try {
       const token = localStorage.getItem("customerToken");
-      await axios.delete(
-        `http://localhost:5000/api/cart/remove/${productId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.delete(`${API_BASE}/cart/remove/${productId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCart((prevCart) =>
         prevCart.filter((item) => item.productId._id !== productId)
       );
@@ -51,7 +49,7 @@ const CustomerCart = () => {
     try {
       const token = localStorage.getItem("customerToken");
       const res = await axios.put(
-        `http://localhost:5000/api/cart/update/${productId}`,
+        `${API_BASE}/cart/update/${productId}`,
         { action: "increase" },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -65,7 +63,7 @@ const CustomerCart = () => {
     try {
       const token = localStorage.getItem("customerToken");
       const res = await axios.put(
-        `http://localhost:5000/api/cart/update/${productId}`,
+        `${API_BASE}/cart/update/${productId}`,
         { action: "decrease" },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -85,7 +83,6 @@ const CustomerCart = () => {
 
       {cart.length > 0 ? (
         <>
-         
           <div className="row g-3 justify-content-center">
             {cart.map((item) => (
               <div className="col-12 col-md-6 col-lg-4" key={item.productId._id}>
@@ -126,7 +123,6 @@ const CustomerCart = () => {
             ))}
           </div>
 
-          
           <div className="mt-4 p-4 bg-light shadow-sm rounded text-center">
             <h5 className="mb-3">Calculation:</h5>
             <div className="d-flex flex-column align-items-center">

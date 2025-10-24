@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BackgroundImg from "../assets/images/AdminAddProduct.jpg";
+import { API_BASE } from "../api"; 
 
 const AdminAddProduct = () => {
   const navigate = useNavigate();
@@ -37,16 +38,12 @@ const AdminAddProduct = () => {
         if (formData[key] !== null) data.append(key, formData[key]);
       });
 
-      const res = await axios.post(
-        "http://localhost:5000/api/admin/add-product",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+    
+const res = await axios.post(
+  `${API_BASE}/admin/add-product`,
+  data,
+  { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
+);
 
       if (res.status === 201) {
         alert("✅ Product added successfully!");

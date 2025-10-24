@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../api"; // Add this in your project for easy base URL management
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
+  // Fetch orders
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/admin/orders", {
+        const res = await axios.get(`${API_BASE}/admin/orders`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-       
+        // Remove items with missing productId & sort by newest
         const sanitizedOrders = res.data
           .map((order) => ({
             ...order,
@@ -32,17 +33,15 @@ const AdminOrders = () => {
     fetchOrders();
   }, []);
 
-  
+  // Mark order as delivered
   const markDelivered = async (orderId) => {
     if (!window.confirm("Are you sure you want to mark this order as delivered?")) return;
 
     try {
       const token = localStorage.getItem("token");
-      await axios.patch(
-        `http://localhost:5000/api/admin/orders/${orderId}/deliver`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.patch(`${API_BASE}/admin/orders/${orderId}/deliver`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       setOrders((prev) =>
         prev.map((order) =>
@@ -55,22 +54,21 @@ const AdminOrders = () => {
     }
   };
 
- 
+  // Cancel order
   const cancelOrder = async (orderId) => {
     const reason = prompt("Please enter the reason for cancelling this order:");
-    if (!reason || !reason.trim()) return alert("Cancellation reason is required!");
+    if (!reason?.trim()) return alert("Cancellation reason is required!");
 
     try {
       const token = localStorage.getItem("token");
       const res = await axios.patch(
-        `http://localhost:5000/api/admin/orders/${orderId}/cancel`,
+        `${API_BASE}/admin/orders/${orderId}/cancel`,
         { cancelReason: reason },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       alert(`Order cancelled successfully! Reason: ${res.data.cancelReason}`);
 
-      
       setOrders((prev) =>
         prev.map((order) =>
           order._id === orderId
@@ -167,7 +165,6 @@ const AdminOrders = () => {
                 )}
               </div>
 
-              
               <div className="card-footer d-flex justify-content-between">
                 {order.status === "Pending" && (
                   <>

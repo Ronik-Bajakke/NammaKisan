@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import { useNavigate } from "react-router-dom";
 import LoginChoice1 from "../assets/images/LoginChoice.jpg";
 import axios from "axios";
+import { API_BASE } from "../api"; // import API base
 
 const FarmerLogin = () => {
   const [mobile, setMobile] = useState("");
@@ -12,7 +13,7 @@ const FarmerLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/farmer/login", {
+      const res = await axios.post(`${API_BASE}/farmer/login`, {
         farmerMobile: mobile,
         farmerPassword: password,
       });
@@ -34,7 +35,10 @@ const FarmerLogin = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="card p-4 shadow-lg bg-white bg-opacity-75" style={{ borderRadius: "20px", minWidth: "400px", maxWidth: "90%" }}>
+      <div
+        className="card p-4 shadow-lg bg-white bg-opacity-75"
+        style={{ borderRadius: "20px", minWidth: "400px", maxWidth: "90%" }}
+      >
         <h2 className="text-center mb-3 text-success fw-bold">
           <i className="fa fa-user me-2"></i> Farmer Login
         </h2>

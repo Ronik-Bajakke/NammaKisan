@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import LoginChoice1 from "../assets/images/LoginChoice.jpg";
+import { API_BASE } from "../config"; // make sure you have this exported from config.js
 
 const CustomerLogin = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const CustomerLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/customer/login", formData);
+      const res = await axios.post(`${API_BASE}/customer/login`, formData);
       localStorage.setItem("customerToken", res.data.token);
       navigate("/customer/dashboard");
     } catch (error) {

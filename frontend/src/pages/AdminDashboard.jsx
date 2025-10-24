@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../api";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -16,20 +17,20 @@ const AdminDashboard = () => {
       }
 
       try {
-        
-        await axios.get("http://localhost:5000/api/admin/verify", {
+        // Verify admin token
+        await axios.get(`${API_BASE}/admin/verify`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-       
-        const res = await axios.get("http://localhost:5000/api/admin/products", {
+        // Fetch admin products
+        const res = await axios.get(`${API_BASE}/admin/products`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        
+        // Filter visible products
         const visibleProducts = res.data.filter((p) => {
           const remainingQty = (p.quantity || 0) - (p.quantitySold || 0);
-          return remainingQty > 0 && !p.isDeleted; 
+          return remainingQty > 0 && !p.isDeleted;
         });
 
         setProducts(visibleProducts);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE } from "../api"; // for future API calls
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const AdminNavbar = () => {
     navigate("/admin/add-product");
   };
 
-  if (!isAuthorized) return null; 
+  if (!isAuthorized) return null;
 
   return (
     <nav
@@ -67,16 +68,27 @@ const AdminNavbar = () => {
             </button>
           </li>
           <li className="nav-item dropdown">
-            <a className="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+            <a
+              className="nav-link dropdown-toggle fw-semibold"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+            >
               <i className="fa fa-user me-1"></i> Admin
             </a>
             <ul className="dropdown-menu dropdown-menu-end">
               <li>
                 <Link className="dropdown-item" to="/admin/farmers">Farmers</Link>
               </li>
-              <li><Link className="dropdown-item" to="/admin/customers">Customers</Link></li>
-              <li><Link className="dropdown-item" to="/admin/orders">Orders</Link></li>
-              <li><Link className="dropdown-item" to="/admin/sales">Sales</Link></li>
+              <li>
+                <Link className="dropdown-item" to="/admin/customers">Customers</Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="/admin/orders">Orders</Link>
+              </li>
+              <li>
+                <Link className="dropdown-item" to="/admin/sales">Sales</Link>
+              </li>
               <li><hr className="dropdown-divider" /></li>
               <li>
                 <button className="dropdown-item text-danger" onClick={handleLogout}>

@@ -9,12 +9,12 @@ const CustomerFooter = () => {
     const token = localStorage.getItem("customerToken");
     if (!token) {
       navigate("/", { replace: true });
-      return;
+    } else {
+      setIsAuthorized(true);
     }
-    setIsAuthorized(true);
   }, [navigate]);
 
-  if (!isAuthorized) return null; 
+  if (!isAuthorized) return null;
 
   return (
     <footer

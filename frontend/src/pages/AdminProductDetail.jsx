@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../api"; // Define API_BASE in a central file
 
 const AdminProductDetail = () => {
   const { id } = useParams();
@@ -18,22 +19,21 @@ const AdminProductDetail = () => {
           return;
         }
 
-        const res = await axios.get(
-          `http://localhost:5000/api/admin/products/${id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        const res = await axios.get(`${API_BASE}/admin/products/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         setProduct(res.data);
-        setLoading(false);
       } catch (err) {
         console.error(err);
-        if (err.response && err.response.status === 401) {
+        if (err.response?.status === 401) {
           localStorage.removeItem("token");
           navigate("/admin/login");
         } else {
           setError("Failed to load product details. Please try again later.");
-          setLoading(false);
         }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -42,12 +42,13 @@ const AdminProductDetail = () => {
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
+
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.delete(
-        `http://localhost:5000/api/admin/products/${id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await axios.delete(`${API_BASE}/admin/products/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
       if (res.status === 200) {
         alert("✅ Product deleted successfully!");
         navigate("/admin/dashboard");
@@ -92,11 +93,7 @@ const AdminProductDetail = () => {
             src={product.productImage}
             alt={product.productName}
             className="img-fluid rounded mb-3"
-            style={{
-              maxHeight: "400px",
-              objectFit: "cover",
-              borderRadius: "10px",
-            }}
+            style={{ maxHeight: "400px", objectFit: "cover", borderRadius: "10px" }}
           />
         )}
 
@@ -129,16 +126,12 @@ const AdminProductDetail = () => {
             <span className="detail-label">📱 Farmer Mobile:</span>{" "}
             <span className="detail-value">{product.farmerMobile}</span>
           </p>
-
-          
           <p>
             <span className="detail-label">🔑 Farmer Password:</span>{" "}
             <span className="detail-value text-primary fw-bold">
               {product.farmerPassword || "Not available"}
             </span>
           </p>
-
-          
           <p>
             <span className="detail-label">🕒 Uploaded On:</span>{" "}
             <span className="detail-value">
@@ -148,13 +141,9 @@ const AdminProductDetail = () => {
               })}
             </span>
           </p>
-
-          
           <p>
             <span className="detail-label">🆔 Product ID:</span>{" "}
-            <span className="detail-value text-primary fw-bold">
-              {product._id}
-            </span>
+            <span className="detail-value text-primary fw-bold">{product._id}</span>
           </p>
         </div>
 

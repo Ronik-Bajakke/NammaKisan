@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoginChoice1 from "../assets/images/LoginChoice.jpg";
+import { API_BASE } from "../api"; // <-- use API_BASE from .env
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -14,15 +15,13 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/login", {
+      const res = await axios.post(`${API_BASE}/admin/login`, {
         email,
         password,
       });
 
-      
       localStorage.setItem("token", res.data.token);
 
-      
       alert("Login Successful ✅");
       navigate("/admin/dashboard");
     } catch (err) {

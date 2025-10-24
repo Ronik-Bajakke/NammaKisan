@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../api"; // <-- import API_BASE
 
 const AdminSearchResults = () => {
   const location = useLocation();
@@ -20,10 +21,12 @@ const AdminSearchResults = () => {
           return;
         }
 
-        
-        const res = await axios.get(`http://localhost:5000/api/admin/products/search?q=${query}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `${API_BASE}/admin/products/search?q=${query}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
         setProducts(res.data);
         setLoading(false);
@@ -41,7 +44,12 @@ const AdminSearchResults = () => {
   if (loading) return <p className="text-center mt-5">Loading...</p>;
   if (error) return <p className="text-center text-danger mt-5">{error}</p>;
 
-  if (!products.length) return <p className="text-center mt-5">No products found for "{query}"</p>;
+  if (!products.length)
+    return (
+      <p className="text-center mt-5">
+        No products found for "{query}"
+      </p>
+    );
 
   return (
     <div className="container my-4">
@@ -61,7 +69,9 @@ const AdminSearchResults = () => {
                   {product.productName} - ₹{product.pricePerKg}/kg
                 </p>
                 <p className="text-muted mb-0">{product.category}</p>
-                <p className="text-secondary mb-0">Farmer: {product.farmerName}</p>
+                <p className="text-secondary mb-0">
+                  Farmer: {product.farmerName}
+                </p>
               </div>
             </div>
           </div>

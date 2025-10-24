@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../api"; // import API base
 
 const FarmerDashboard = () => {
   const [farmer, setFarmer] = useState(null);
@@ -8,14 +9,13 @@ const FarmerDashboard = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("farmerToken");
         if (!token) throw new Error("No token");
 
-        const res = await axios.get("http://localhost:5000/api/farmer/profile", {
+        const res = await axios.get(`${API_BASE}/farmer/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFarmer(res.data);
@@ -27,14 +27,13 @@ const FarmerDashboard = () => {
     fetchProfile();
   }, [navigate]);
 
-  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem("farmerToken");
         if (!token) throw new Error("No token");
 
-        const res = await axios.get("http://localhost:5000/api/farmer/dashboard", {
+        const res = await axios.get(`${API_BASE}/farmer/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProducts(res.data);
@@ -55,7 +54,6 @@ const FarmerDashboard = () => {
   if (!farmer) return <p className="text-center mt-5">Loading farmer info...</p>;
   if (loading) return <p className="text-center mt-5">Loading products...</p>;
 
-  
   const availableProducts = products
     .filter((p) => p.quantity - (p.quantitySold || 0) > 0)
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -68,17 +66,13 @@ const FarmerDashboard = () => {
       return dateB - dateA;
     });
 
-  
   const renderProductCard = (product, isSoldOut = false) => {
     const quantityRemaining = product.quantity - (product.quantitySold || 0);
     const totalSales = (product.quantitySold || 0) * product.pricePerKg;
 
     return (
       <div className="col-12 col-sm-6 col-lg-3" key={product._id}>
-        <div
-          className="card h-100 shadow-sm border-0"
-          style={{ borderRadius: "15px" }}
-        >
+        <div className="card h-100 shadow-sm border-0" style={{ borderRadius: "15px" }}>
           {product.productImage && (
             <img
               src={product.productImage}
@@ -112,7 +106,6 @@ const FarmerDashboard = () => {
 
   return (
     <div className="container my-5">
-      
       <div
         style={{
           display: "flex",
@@ -148,9 +141,6 @@ const FarmerDashboard = () => {
         </button>
       </div>
 
-     
-
-     
       {availableProducts.length > 0 ? (
         <div className="row g-4 mb-5">
           {availableProducts.map((product) => renderProductCard(product))}
@@ -161,7 +151,6 @@ const FarmerDashboard = () => {
 
       <hr />
 
-     
       <h4 className="mt-4 mb-3 text-center text-danger">Sold Out Products</h4>
       {soldOutProducts.length > 0 ? (
         <div className="row g-4">

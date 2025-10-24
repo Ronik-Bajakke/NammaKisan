@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../api";
 
 const AdminFarmers = () => {
   const [farmers, setFarmers] = useState([]);
@@ -10,7 +11,7 @@ const AdminFarmers = () => {
   useEffect(() => {
     const fetchFarmers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/farmers", {
+        const res = await axios.get(`${API_BASE}/admin/farmers`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFarmers(res.data);
@@ -71,7 +72,6 @@ const AdminFarmers = () => {
         </table>
       </div>
 
-      
       {selectedFarmer && (
         <div
           className="modal show fade d-block"
@@ -94,7 +94,6 @@ const AdminFarmers = () => {
                   <p>No listings available.</p>
                 ) : (
                   <>
-                   
                     <h5 className="fw-bold text-success mb-3">
                       <i className="fa fa-box me-2"></i>Active Listings
                     </h5>
@@ -139,10 +138,7 @@ const AdminFarmers = () => {
                       </table>
                     </div>
 
-                    
-                    <h5 className="fw-bold text-success mb-3">
-                      Sold Out Listings
-                    </h5>
+                    <h5 className="fw-bold text-success mb-3">Sold Out Listings</h5>
                     <div className="table-responsive">
                       <table className="table table-bordered align-middle">
                         <thead className="table-light">

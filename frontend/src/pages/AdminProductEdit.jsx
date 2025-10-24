@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../api"; // <-- import the base URL
 
 const AdminEditProduct = () => {
   const { id } = useParams();
@@ -23,10 +24,9 @@ const AdminEditProduct = () => {
     const fetchProduct = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(
-          `http://localhost:5000/api/admin/products/${id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        const res = await axios.get(`${API_BASE}/admin/products/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setProduct(res.data);
         setFormData({
           farmerName: res.data.farmerName,
@@ -63,16 +63,12 @@ const AdminEditProduct = () => {
         if (formData[key] !== null) data.append(key, formData[key]);
       });
 
-      const res = await axios.put(
-        `http://localhost:5000/api/admin/products/${id}`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const res = await axios.put(`${API_BASE}/admin/products/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (res.status === 200) {
         alert("✅ Product updated successfully!");

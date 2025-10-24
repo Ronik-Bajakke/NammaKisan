@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../api";
 
 const AdminCustomers = () => {
   const [customers, setCustomers] = useState([]);
@@ -10,11 +11,11 @@ const AdminCustomers = () => {
 
   const token = localStorage.getItem("token");
 
-  
+  // Fetch all customers
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/customers", {
+        const res = await axios.get(`${API_BASE}/admin/customers`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCustomers(res.data);
@@ -24,21 +25,19 @@ const AdminCustomers = () => {
         setLoading(false);
       }
     };
-
     fetchCustomers();
   }, [token]);
 
- 
+  // Fetch delivered counts
   useEffect(() => {
     const fetchDeliveredCounts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/orders", {
+        const res = await axios.get(`${API_BASE}/admin/orders`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const delivered = res.data.filter((o) => o.status === "Delivered");
 
-        
         const counts = {};
         delivered.forEach((order) => {
           const customerId = order.customerId?._id;
@@ -52,14 +51,13 @@ const AdminCustomers = () => {
         console.error("Error fetching delivered counts:", err);
       }
     };
-
     fetchDeliveredCounts();
   }, [token]);
 
-  
+  // Fetch orders for selected customer
   const fetchOrders = async (customerId) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/orders", {
+      const res = await axios.get(`${API_BASE}/admin/orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -88,7 +86,6 @@ const AdminCustomers = () => {
         <i className="fa fa-users me-2"></i>Customer Details
       </h3>
 
-     
       <div className="table-responsive shadow-sm rounded">
         <table className="table table-hover align-middle">
           <thead className="table-success">
@@ -121,7 +118,6 @@ const AdminCustomers = () => {
         </table>
       </div>
 
-      
       {selectedCustomer && (
         <div
           className="modal show fade d-block"
@@ -155,7 +151,7 @@ const AdminCustomers = () => {
                         0
                       );
 
-                      const orderNumber = orders.length - i; 
+                      const orderNumber = orders.length - i;
 
                       return (
                         <div

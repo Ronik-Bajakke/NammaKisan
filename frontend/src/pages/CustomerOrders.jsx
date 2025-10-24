@@ -8,7 +8,7 @@ const CustomerOrders = () => {
   const [customer, setCustomer] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  
+  // Fetch customer profile
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
@@ -27,7 +27,7 @@ const CustomerOrders = () => {
     fetchCustomer();
   }, []);
 
-  
+  // Fetch orders and existing reviews
   useEffect(() => {
     const fetchOrdersWithReviews = async () => {
       try {
@@ -36,14 +36,13 @@ const CustomerOrders = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        
         const sortedOrders = resOrders.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
 
         const reviewData = {};
         for (let order of sortedOrders) {
-          const firstItem = order.items.find(i => i.productId);
+          const firstItem = order.items.find((i) => i.productId);
           if (!firstItem) continue;
           const productId = firstItem.productId._id;
 
@@ -71,14 +70,15 @@ const CustomerOrders = () => {
     fetchOrdersWithReviews();
   }, []);
 
-  
+  // Handle review input changes
   const handleReviewChange = (orderId, field, value) => {
-    setReviewInputs(prev => ({
+    setReviewInputs((prev) => ({
       ...prev,
       [orderId]: { ...prev[orderId], [field]: value },
     }));
   };
 
+  // Submit a new review
   const submitReview = async (order) => {
     try {
       if (!customer) return alert("Customer data not loaded");
@@ -90,7 +90,7 @@ const CustomerOrders = () => {
         return alert("Please write a comment for the review!");
 
       const token = localStorage.getItem("customerToken");
-      const firstItem = order.items.find(i => i.productId);
+      const firstItem = order.items.find((i) => i.productId);
       if (!firstItem) return alert("Cannot submit review: product missing");
       const productId = firstItem.productId._id;
 
@@ -107,21 +107,21 @@ const CustomerOrders = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      setReviews(prev => ({
+      setReviews((prev) => ({
         ...prev,
         [order._id]: { rating, comment },
       }));
-      setReviewInputs(prev => ({ ...prev, [order._id]: {} }));
+      setReviewInputs((prev) => ({ ...prev, [order._id]: {} }));
     } catch (err) {
       console.error("Failed to submit review:", err);
       alert(err.response?.data?.message || "Failed to submit review");
     }
   };
 
-  
+  // Star rating component
   const StarRating = ({ rating, onChange, readOnly }) => (
     <div className="d-flex gap-1" style={{ cursor: readOnly ? "default" : "pointer" }}>
-      {[1, 2, 3, 4, 5].map(star => (
+      {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}
           onClick={() => !readOnly && onChange(star)}
@@ -133,10 +133,8 @@ const CustomerOrders = () => {
     </div>
   );
 
-  
   if (loading) return <p className="text-center mt-5">Loading orders...</p>;
 
-  
   if (orders.length === 0)
     return (
       <div className="text-center mt-5 text-muted">
@@ -149,26 +147,20 @@ const CustomerOrders = () => {
       </div>
     );
 
-  
   return (
     <div className="container my-5">
       <h3 className="text-success mb-4 text-center">📦 Your Orders</h3>
       <div className="row g-4">
-        {orders.map(order => {
+        {orders.map((order) => {
           const submitted = reviews[order._id];
           const input = reviewInputs[order._id] || { rating: 0, comment: "" };
 
           const isDelivered = order.status === "Delivered";
           const isCancelled = order.status === "Cancelled";
-          const isPending = order.status === "Pending" || order.status === "On the way";
 
           return (
             <div key={order._id} className="col-12 col-md-6 col-lg-4">
-              <div
-                className={`card h-100 shadow border-0 ${
-                  isCancelled ? "bg-light" : ""
-                }`}
-              >
+              <div className={`card h-100 shadow border-0 ${isCancelled ? "bg-light" : ""}`}>
                 <div className="card-header bg-success text-white d-flex justify-content-between align-items-center">
                   <span>Order ID: {order._id.slice(-6)}</span>
                   <span
@@ -183,12 +175,10 @@ const CustomerOrders = () => {
                     {order.status}
                   </span>
                 </div>
-
                 <div className="card-body">
                   <p><strong>Address:</strong> {order.address}</p>
                   <p><strong>Total Amount:</strong> ₹{order.totalAmount}</p>
 
-                  
                   <p>
                     <strong>Status:</strong>{" "}
                     {isDelivered ? (
@@ -200,10 +190,9 @@ const CustomerOrders = () => {
                     )}
                   </p>
 
-                 
                   <p><strong>Items:</strong></p>
                   <ul className="list-group list-group-flush mb-2">
-                    {order.items.map(item => (
+                    {order.items.map((item) => (
                       <li
                         key={item._id}
                         className="list-group-item d-flex justify-content-between align-items-center px-0"
@@ -217,7 +206,6 @@ const CustomerOrders = () => {
                     ))}
                   </ul>
 
-                  
                   {isDelivered && (
                     <div>
                       {submitted ? (
@@ -231,12 +219,14 @@ const CustomerOrders = () => {
                           <p className="mb-1"><strong>Your Review:</strong></p>
                           <StarRating
                             rating={input.rating || 0}
-                            onChange={value => handleReviewChange(order._id, "rating", value)}
+                            onChange={(value) => handleReviewChange(order._id, "rating", value)}
                           />
                           <textarea
                             placeholder="Write your review..."
                             value={input.comment || ""}
-                            onChange={e => handleReviewChange(order._id, "comment", e.target.value)}
+                            onChange={(e) =>
+                              handleReviewChange(order._id, "comment", e.target.value)
+                            }
                             className="form-control"
                           />
                           <button
@@ -250,19 +240,18 @@ const CustomerOrders = () => {
                     </div>
                   )}
 
-                 
-            {isCancelled && (
-  <div className="alert alert-danger mt-3" role="alert">
-    <p className="fw-bold mb-1">❌ This order has been cancelled.</p>
-    {order.cancelReason ? (
-      <p className="mb-0">
-        <strong>Reason:</strong> {order.cancelReason}
-      </p>
-    ) : (
-      <p className="mb-0 text-muted fst-italic">No reason provided.</p>
-    )}
-  </div>
-)}
+                  {isCancelled && (
+                    <div className="alert alert-danger mt-3" role="alert">
+                      <p className="fw-bold mb-1">❌ This order has been cancelled.</p>
+                      {order.cancelReason ? (
+                        <p className="mb-0">
+                          <strong>Reason:</strong> {order.cancelReason}
+                        </p>
+                      ) : (
+                        <p className="mb-0 text-muted fst-italic">No reason provided.</p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

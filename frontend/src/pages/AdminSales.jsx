@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../api"; // <-- import API_BASE
 
 const AdminSales = () => {
   const [sales, setSales] = useState(null);
@@ -8,11 +9,11 @@ const AdminSales = () => {
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/sales", {
+        const res = await axios.get(`${API_BASE}/admin/sales`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        
+        // Sort orders by most recent
         const sortedOrders = res.data.recentOrders.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
@@ -35,13 +36,13 @@ const AdminSales = () => {
         <i className="fa fa-chart-line me-2"></i>Sales Dashboard
       </h3>
 
-      
+      {/* Sales summary cards */}
       <div className="row mb-4">
         {[
           { title: "Today", value: sales.today },
           { title: "This Month", value: sales.month },
           { title: "This Year", value: sales.year },
-          { title: "All Time", value: sales.allTime }
+          { title: "All Time", value: sales.allTime },
         ].map((card, idx) => (
           <div className="col-md-3 mb-3" key={idx}>
             <div className="card shadow-sm text-center p-3">
@@ -52,7 +53,7 @@ const AdminSales = () => {
         ))}
       </div>
 
-      
+      {/* Orders table */}
       <div className="table-responsive shadow-sm rounded">
         <table className="table table-hover align-middle">
           <thead className="table-success">
@@ -68,7 +69,6 @@ const AdminSales = () => {
           <tbody>
             {sales.recentOrders.map((order, idx) => (
               <tr key={order._id}>
-                
                 <td>{totalOrders - idx}</td>
                 <td>{order.customerId?.name || order.customerId}</td>
                 <td>

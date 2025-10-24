@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../api"; // <-- import API_BASE
 
 const Checkout = ({ totalAmount }) => {
   const [address, setAddress] = useState("");
@@ -14,12 +15,13 @@ const Checkout = ({ totalAmount }) => {
 
     try {
       const token = localStorage.getItem("customerToken");
-      
+
       await axios.post(
-        "http://localhost:5000/api/orders",
+        `${API_BASE}/orders`,
         { address, totalAmount },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       alert("Order placed successfully!");
       navigate("/customer/dashboard");
     } catch (error) {
@@ -51,7 +53,9 @@ const Checkout = ({ totalAmount }) => {
             </div>
 
             <div className="text-center mb-3">
-              <h5>Total Payable: <span className="text-success">₹{totalAmount}</span></h5>
+              <h5>
+                Total Payable: <span className="text-success">₹{totalAmount}</span>
+              </h5>
             </div>
 
             <div className="d-flex justify-content-between">

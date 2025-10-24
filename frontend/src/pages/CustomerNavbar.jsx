@@ -46,7 +46,12 @@ const CustomerNavbar = ({ onResetCategory }) => {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light px-4 shadow-sm mt-2"
-      style={{ minHeight: "70px", fontSize: "1.05rem", backgroundColor: "#f8f9fa", borderRadius: "10px" }}
+      style={{
+        minHeight: "70px",
+        fontSize: "1.05rem",
+        backgroundColor: "#f8f9fa",
+        borderRadius: "10px",
+      }}
     >
       <div className="container-fluid d-flex justify-content-between align-items-center">
         {/* Logo */}
@@ -77,44 +82,44 @@ const CustomerNavbar = ({ onResetCategory }) => {
         </form>
 
         {/* Right Menu */}
-       <ul className="navbar-nav d-flex flex-row align-items-center mb-0">
-  <li className="nav-item me-3">
-    <span
-      className="nav-link fw-semibold text-success"
-      style={{ cursor: "pointer" }}
-      onClick={goToAllProducts}
-    >
-      <i className="fa fa-home me-1"></i> Home
-    </span>
-  </li>
-  <li className="nav-item me-3">
-    <span
-      className="nav-link fw-semibold text-success"
-      style={{ cursor: "pointer" }}
-      onClick={() => navigate("/customer/cart")}
-    >
-      <i className="fa fa-shopping-cart me-1"></i> Cart
-    </span>
-  </li>
-  <li className="nav-item me-3">
-    <span
-      className="nav-link fw-semibold text-success"
-      style={{ cursor: "pointer" }}
-      onClick={() => navigate("/customer/orders")}
-    >
-      <i className="fa fa-box me-1"></i> Orders
-    </span>
-  </li>
-  <li className="nav-item">
-    <button
-      className="btn nav-link fw-semibold text-danger"
-      onClick={handleLogout}
-      style={{ background: "none", border: "none", cursor: "pointer" }}
-    >
-      <i className="fa fa-sign-out me-1"></i> Logout
-    </button>
-  </li>
-</ul>
+        <ul className="navbar-nav d-flex flex-row align-items-center mb-0">
+          <li className="nav-item me-3">
+            <span
+              className="nav-link fw-semibold text-success"
+              style={{ cursor: "pointer" }}
+              onClick={goToAllProducts}
+            >
+              <i className="fa fa-home me-1"></i> Home
+            </span>
+          </li>
+          <li className="nav-item me-3">
+            <span
+              className="nav-link fw-semibold text-success"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/customer/cart")}
+            >
+              <i className="fa fa-shopping-cart me-1"></i> Cart
+            </span>
+          </li>
+          <li className="nav-item me-3">
+            <span
+              className="nav-link fw-semibold text-success"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/customer/orders")}
+            >
+              <i className="fa fa-box me-1"></i> Orders
+            </span>
+          </li>
+          <li className="nav-item">
+            <button
+              className="btn nav-link fw-semibold text-danger"
+              onClick={handleLogout}
+              style={{ background: "none", border: "none", cursor: "pointer" }}
+            >
+              <i className="fa fa-sign-out me-1"></i> Logout
+            </button>
+          </li>
+        </ul>
       </div>
     </nav>
   );
