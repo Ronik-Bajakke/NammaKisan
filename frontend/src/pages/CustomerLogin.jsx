@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import LoginChoice1 from "../assets/images/LoginChoice.jpg";
-import { API_BASE } from "../config"; // make sure you have this exported from config.js
+import { API_BASE } from "../api.js"; // make sure you have this exported from config.js
 
 const CustomerLogin = () => {
   const navigate = useNavigate();
