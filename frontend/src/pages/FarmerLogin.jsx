@@ -89,15 +89,6 @@ const FarmerLogin = () => {
             )}
           </button>
 
-          <p className="text-center text-muted mt-2">
-            Don’t have an account?{" "}
-            <Link
-              to="/farmer/signup"
-              className="text-success fw-semibold text-decoration-none"
-            >
-              Sign Up
-            </Link>
-          </p>
         </form>
       </div>
     </div>
