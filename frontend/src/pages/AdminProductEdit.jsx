@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE } from "../api";
-import "../styles/AdminEditProduct.css"; // <-- add your custom style here
+import "./AdminEditProduct.css"; // <-- add your custom style here
 
 const AdminEditProduct = () => {
   const { id } = useParams();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../styles/AdminAddProduct.css"; // ✅ external CSS for background
+import "./AdminAddProduct.css"; // ✅ external CSS for background
 import { API_BASE } from "../api";
 
 const AdminAddProduct = () => {
