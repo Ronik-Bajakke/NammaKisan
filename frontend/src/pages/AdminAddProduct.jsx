@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./AdminAddProduct.css"; // ✅ external CSS for background
+import "./AdminAddProduct.css";
 import { API_BASE } from "../api";
 
 const AdminAddProduct = () => {
@@ -40,7 +40,7 @@ const AdminAddProduct = () => {
       });
 
       setLoading(true);
-      const res = await axios.post(`${API_BASE}/admin/add-product`, data, {
+      await axios.post(`${API_BASE}/admin/add-product`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -60,15 +60,7 @@ const AdminAddProduct = () => {
   return (
     <div className="admin-add-product-page">
       <div className="admin-add-overlay">
-        <div
-          className="card p-4 shadow-lg bg-white bg-opacity-75 mx-auto"
-          style={{
-            borderRadius: "20px",
-            width: "90%",
-            maxWidth: "760px",
-            zIndex: 2,
-          }}
-        >
+        <div className="admin-add-card">
           <h2 className="text-center mb-4 text-success fw-bold">
             <i className="fa fa-plus-circle me-2"></i> Add Product
           </h2>
@@ -106,9 +98,7 @@ const AdminAddProduct = () => {
                   required
                 />
 
-                <label className="form-label fw-semibold">
-                  Price per Kg (₹)
-                </label>
+                <label className="form-label fw-semibold">Price per Kg (₹)</label>
                 <input
                   type="number"
                   name="pricePerKg"
