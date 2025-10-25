@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./AdminEditProduct.css"; // ✅ external CSS for background image
 import { API_BASE } from "../api";
+import "../styles/AdminEditProduct.css"; // <-- add your custom style here
 
 const AdminEditProduct = () => {
   const { id } = useParams();
@@ -77,7 +77,7 @@ const AdminEditProduct = () => {
       }
     } catch (err) {
       console.error(err.response?.data || err);
-      alert(err.response?.data?.message || "Failed to update product ❌");
+      alert(err.response?.data?.message || "Failed to update product");
     }
   };
 
@@ -86,157 +86,149 @@ const AdminEditProduct = () => {
 
   return (
     <div className="admin-edit-product-page">
-      <div
-        className="card p-4 shadow-lg bg-white bg-opacity-75"
-        style={{
-          borderRadius: "20px",
-          width: "90%",
-          maxWidth: "760px",
-          zIndex: 2,
-        }}
-      >
-        <h2 className="text-center mb-4 text-success fw-bold">
-          <i className="fa fa-edit me-2"></i> Edit Product
-        </h2>
+      <div className="admin-edit-overlay">
+        <div className="container mt-5" style={{ maxWidth: "800px" }}>
+          <h2 className="text-center mb-4 text-success fw-bold">Edit Product</h2>
+          <div className="card border-0 shadow-sm p-3">
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <div className="mb-2">
+                <label className="form-label">Farmer Name</label>
+                <input
+                  type="text"
+                  name="farmerName"
+                  className="form-control"
+                  value={formData.farmerName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="mb-2">
-            <label className="form-label">Farmer Name</label>
-            <input
-              type="text"
-              name="farmerName"
-              className="form-control"
-              value={formData.farmerName}
-              onChange={handleChange}
-              required
-            />
+              <div className="mb-2">
+                <label className="form-label">Product Name</label>
+                <input
+                  type="text"
+                  name="productName"
+                  className="form-control"
+                  value={formData.productName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-2">
+                <label className="form-label">Current Image</label>
+                {product.productImage && (
+                  <img
+                    src={product.productImage}
+                    alt="Current"
+                    style={{ maxHeight: "120px", marginBottom: "5px" }}
+                  />
+                )}
+                <input
+                  type="file"
+                  name="productImage"
+                  className="form-control"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="mb-2">
+                <label className="form-label">Price per Kg (₹)</label>
+                <input
+                  type="number"
+                  name="pricePerKg"
+                  className="form-control"
+                  value={formData.pricePerKg}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-2">
+                <label className="form-label">Farmer Mobile</label>
+                <input
+                  type="tel"
+                  name="farmerMobile"
+                  className="form-control"
+                  value={formData.farmerMobile}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-2">
+                <label className="form-label">Quantity (kg)</label>
+                <input
+                  type="number"
+                  name="quantity"
+                  className="form-control"
+                  value={formData.quantity}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-2">
+                <label className="form-label">Minimum Buy (kg)</label>
+                <input
+                  type="number"
+                  name="minBuy"
+                  className="form-control"
+                  value={formData.minBuy}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="mb-2">
+                <label className="form-label">Category</label>
+                <select
+                  className="form-select"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select category</option>
+                  <option value="vegetables">Vegetables</option>
+                  <option value="fruits">Fruits</option>
+                  <option value="others">Others</option>
+                </select>
+              </div>
+
+              <div className="mb-2">
+                <label className="form-label">Address</label>
+                <textarea
+                  className="form-control"
+                  name="address"
+                  rows="2"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="d-flex justify-content-between mt-3">
+                <button type="submit" className="btn btn-success">
+                  💾 Save Changes
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => navigate(`/admin/product/${id}`)}
+                >
+                  ❌ Cancel
+                </button>
+              </div>
+            </form>
           </div>
-
-          <div className="mb-2">
-            <label className="form-label">Product Name</label>
-            <input
-              type="text"
-              name="productName"
-              className="form-control"
-              value={formData.productName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-2">
-            <label className="form-label">Current Image</label>
-            {product.productImage && (
-              <img
-                src={product.productImage}
-                alt="Current"
-                style={{ maxHeight: "120px", marginBottom: "5px" }}
-              />
-            )}
-            <input
-              type="file"
-              name="productImage"
-              className="form-control"
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="mb-2">
-            <label className="form-label">Price per Kg (₹)</label>
-            <input
-              type="number"
-              name="pricePerKg"
-              className="form-control"
-              value={formData.pricePerKg}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-2">
-            <label className="form-label">Farmer Mobile</label>
-            <input
-              type="tel"
-              name="farmerMobile"
-              className="form-control"
-              value={formData.farmerMobile}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-2">
-            <label className="form-label">Quantity (kg)</label>
-            <input
-              type="number"
-              name="quantity"
-              className="form-control"
-              value={formData.quantity}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-2">
-            <label className="form-label">Minimum Buy (kg)</label>
-            <input
-              type="number"
-              name="minBuy"
-              className="form-control"
-              value={formData.minBuy}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-2">
-            <label className="form-label">Category</label>
-            <select
-              className="form-select"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select category</option>
-              <option value="vegetables">Vegetables</option>
-              <option value="fruits">Fruits</option>
-              <option value="others">Others</option>
-            </select>
-          </div>
-
-          <div className="mb-2">
-            <label className="form-label">Address</label>
-            <textarea
-              className="form-control"
-              name="address"
-              rows="2"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="d-flex justify-content-between mt-3">
-            <button type="submit" className="btn btn-success fw-semibold">
-              💾 Save Changes
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary fw-semibold"
-              onClick={() => navigate(`/admin/product/${id}`)}
-            >
-              ❌ Cancel
-            </button>
-          </div>
-        </form>
-
-        <button
-          className="btn btn-success mt-3 w-100"
-          onClick={() => navigate("/admin/dashboard")}
-        >
-          ← Back to Dashboard
-        </button>
+          <button
+            className="btn btn-success mt-3 w-100 mb-5"
+            onClick={() => navigate("/admin/dashboard")}
+          >
+            ← Back to Dashboard
+          </button>
+        </div>
       </div>
     </div>
   );

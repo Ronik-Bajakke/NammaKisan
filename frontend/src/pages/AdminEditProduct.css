@@ -1,13 +1,20 @@
 .admin-edit-product-page {
-  position: fixed;
-  inset: 0;
-  background-image: url("../assets/images/AdminAddProduct.jpg"); /* ✅ same image */
+  position: relative;
+  min-height: 100vh;
+  background-image: url("../assets/images/LoginChoice.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
+  align-items: flex-start;
+  padding-top: 80px; /* ensures navbar stays visible */
+  z-index: 0;
+}
+
+.admin-edit-overlay {
+  background-color: rgba(255, 255, 255, 0.85);
+  width: 100%;
+  padding: 20px 0;
+  z-index: 1;
 }
