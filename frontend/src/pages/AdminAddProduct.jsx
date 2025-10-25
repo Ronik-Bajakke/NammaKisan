@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import BackgroundImg from "../assets/images/AdminAddProduct.jpg";
-import { API_BASE } from "../api"; 
+import "./AdminAddProduct.css"; // ✅ external CSS for background
+import { API_BASE } from "../api";
 
 const AdminAddProduct = () => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const AdminAddProduct = () => {
     address: "",
     pricePerKg: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -38,60 +39,41 @@ const AdminAddProduct = () => {
         if (formData[key] !== null) data.append(key, formData[key]);
       });
 
-    
-const res = await axios.post(
-  `${API_BASE}/admin/add-product`,
-  data,
-  { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
-);
+      setLoading(true);
+      const res = await axios.post(`${API_BASE}/admin/add-product`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      if (res.status === 201) {
-        alert("✅ Product added successfully!");
-        navigate("/admin/dashboard");
-      }
+      alert("✅ Product added successfully!");
+      navigate("/admin/dashboard");
     } catch (err) {
       console.error(err.response?.data || err);
-      alert(err.response?.data?.message || "Failed to add product");
+      alert(err.response?.data?.message || "Failed to add product ❌");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div
-      className="d-flex justify-content-center align-items-center vh-100 position-relative"
-      style={{ overflow: "hidden" }}
-    >
-     
+    <div className="admin-add-product-page">
       <div
-        className="position-absolute top-0 start-0 w-100 h-100"
-        style={{
-          backgroundImage: `url(${BackgroundImg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "blur(4px) brightness(0.7)",
-          zIndex: 0,
-        }}
-      ></div>
-
-      
-      <div
-        className="card p-4 shadow-lg bg-white bg-opacity-75 position-relative"
+        className="card p-4 shadow-lg bg-white bg-opacity-75"
         style={{
           borderRadius: "20px",
-          width: "760px", 
-          zIndex: 1,
-          transform: "translateY(-10px)", 
+          width: "90%",
+          maxWidth: "760px",
+          zIndex: 2,
         }}
       >
-        <h2
-          className="text-center mb-3 text-success fw-bold"
-          style={{ fontSize: "2rem" }}
-        >
+        <h2 className="text-center mb-4 text-success fw-bold">
           <i className="fa fa-plus-circle me-2"></i> Add Product
         </h2>
 
         <form onSubmit={handleSubmit}>
           <div className="row g-3">
-            
             <div className="col-md-6">
               <label className="form-label fw-semibold">Farmer Name</label>
               <input
@@ -136,7 +118,6 @@ const res = await axios.post(
               />
             </div>
 
-            
             <div className="col-md-6">
               <label className="form-label fw-semibold">Farmer Mobile</label>
               <input
@@ -186,7 +167,6 @@ const res = await axios.post(
               </select>
             </div>
 
-            
             <div className="col-12">
               <label className="form-label fw-semibold">Farmer Address</label>
               <textarea
@@ -200,14 +180,24 @@ const res = await axios.post(
             </div>
           </div>
 
-          
           <div className="text-center mt-3">
-            <button className="btn btn-success w-50 fw-semibold" type="submit">
-              <i className="fa fa-plus-circle me-2"></i> Add Product
+            <button
+              className="btn btn-success w-50 fw-semibold"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <i className="fa fa-spinner fa-spin me-2"></i> Adding...
+                </>
+              ) : (
+                <>
+                  <i className="fa fa-plus-circle me-2"></i> Add Product
+                </>
+              )}
             </button>
           </div>
         </form>
-        
       </div>
     </div>
   );

@@ -1,0 +1,13 @@
+.admin-edit-product-page {
+  position: fixed;
+  inset: 0;
+  background-image: url("../assets/images/AdminAddProduct.jpg"); /* ✅ same image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
