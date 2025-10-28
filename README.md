@@ -113,7 +113,7 @@ NammaKisan/
 │
 └── README.md             # This file
 
----
+
 ⚡ Deployment
 Deployed using Render 🚀
 
@@ -121,7 +121,7 @@ Frontend: React app hosted as a static site
 
 Backend: Node.js + Express API connected to MongoDB Atlas
 
----
+
 🧠 Environment Variables
 Create a .env file inside the backend/ folder and add the following:
 
@@ -131,7 +131,6 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
----
 
 💻 How to Run Locally
 bash
