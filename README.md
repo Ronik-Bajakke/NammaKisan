@@ -112,26 +112,27 @@ NammaKisan/
 │   └── README.md
 │
 └── README.md             # This file
-⚡ Deployment
-Deployed using Render 🚀
 
-Frontend: React app hosted as a static site
+## ⚡ Deployment  
 
-Backend: Node.js + Express API connected to MongoDB Atlas
+Deployed using **Render** 🚀  
 
-🧠 Environment Variables
-Create a .env file inside the backend/ folder:
+- **Frontend:** React app hosted as a static site  
+- **Backend:** Node.js + Express API connected to MongoDB Atlas  
 
-env
-Copy code
+---
+
+## 🧠 Environment Variables  
+
+Create a `.env` file inside the **backend/** folder:  
+
+```env
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-📦 How to Run Locally
-bash
-Copy code
+
 # Clone repo
 git clone https://github.com/yourusername/namma-kisan.git
 
@@ -150,6 +151,7 @@ npm install
 # Start frontend
 npm start
 # App will run on http://localhost:3000
+
 👨‍💻 Author
 Ronik Bajakke
 💼 Aspiring MERN Stack Developer
