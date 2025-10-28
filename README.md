@@ -113,7 +113,7 @@ NammaKisan/
 │
 └── README.md             # This file
 
-## ⚡ Deployment  
+# ⚡ Deployment  
 
 Deployed using **Render** 🚀  
 
@@ -122,7 +122,7 @@ Deployed using **Render** 🚀
 
 ---
 
-## 🧠 Environment Variables  
+# 🧠 Environment Variables  
 
 Create a `.env` file inside the **backend/** folder:  
 
@@ -132,6 +132,7 @@ JWT_SECRET=your_jwt_secret
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+
 
 # Clone repo
 git clone https://github.com/yourusername/namma-kisan.git
