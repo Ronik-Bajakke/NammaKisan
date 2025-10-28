@@ -113,7 +113,7 @@ NammaKisan/
 │
 └── README.md             # This file
 
-# ⚡ Deployment  
+## ⚡ Deployment  
 
 Deployed using **Render** 🚀  
 
@@ -122,7 +122,7 @@ Deployed using **Render** 🚀
 
 ---
 
-# 🧠 Environment Variables  
+## 🧠 Environment Variables  
 
 Create a `.env` file inside the **backend/** folder and add the following:  
 
