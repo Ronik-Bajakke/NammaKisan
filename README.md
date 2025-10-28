@@ -156,6 +156,7 @@ npm install
 # Start frontend
 npm start
 # App will run on http://localhost:3000
+
 👨‍💻 Author
 Ronik Bajakke
 💼 Aspiring MERN Stack Developer
