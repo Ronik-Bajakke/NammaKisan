@@ -9,59 +9,71 @@
 **NammaKisan** is a full-stack **Farm-to-Consumer web application** that connects **farmers directly with customers** — eliminating middlemen and ensuring fair prices.  
 Built with **React, Node.js, Express, and MongoDB**, it enables farmers to **list their products**, and customers to **browse, order, and track deliveries** seamlessly.  
 
-🔗 **Live Demo (Frontend)**: [NammaKisan on Render](https://your-frontend.onrender.com)  
-🔗 **Live Demo (Backend API)**: [API Endpoint](https://your-backend.onrender.com/api)  
+🔗 **Live Demo (Frontend)**: [NammaKisan on Render](https://nammakisan-frontend1.onrender.com)  
+🔗 **Live Demo (Backend API)**: [API Endpoint](https://nammakisan-backend.onrender.com)  
 
 ---
 
 ## 🚀 Features  
 
-### 👨‍🌾 Farmer Module  
-- Farmer **sign up / log in** securely  
-- Add new **farm produce** with:
-  - Product name  
-  - Image (Cloudinary upload)  
-  - Price, category, description  
-- View, edit, or delete listed products  
-- Track **orders received** from customers  
+### 🧑‍💼 Admin  
+- Login only with credentials set in backend.  
+- Add products with farmer name, mobile number, address, price/kg, minimum quantity, and image.  
+- Manage all orders — accept or cancel with reason.  
+- View all customers and their order history.  
+- View all farmers, their listings (active/sold out), and total products.  
+- Track sales (Today, Monthly, Yearly, All-time).  
 
 ---
 
-### 🛒 Customer Module  
-- Customer **sign up / log in**  
-- Browse all available products  
-- Filter by category (**Fruits, Vegetables, Others**)  
-- Add items to cart and place orders  
-- View **order history** and status  
+### 👨‍🌾 Farmer  
+- Login using admin-provided password and registered mobile number.  
+- Add, edit, or remove farm produce with images and details.  
+- View own listings and order requests.  
+- Check product status (listed or sold out).  
 
 ---
 
-### 🧑‍💼 Admin Module  
-- View all registered **farmers** and **customers**  
-- Manage **products** and **orders**  
-- Track total delivered orders, customers, and farmers  
+### 🛒 Customer  
+- Sign up or log in to browse available farm products.  
+- Filter by category (Fruits, Vegetables, Others).  
+- Add to cart, update items, or remove from cart.  
+- Place orders with delivery address.  
+- Track order status (Pending, Accepted, Rejected, Delivered).  
 
 ---
 
-### ⚙️ Other Features  
-- JWT-based authentication for all users  
-- Secure REST API routes  
-- Image uploads via **Cloudinary** + **Multer**  
-- Realtime dashboard for admin insights  
-- Deployed seamlessly on **Render**  
+### 🔐 General  
+- Secure JWT-based authentication for all user roles.  
+- Cloudinary integration for image uploads.  
+- Responsive dashboards for Admin, Farmer, and Customer.  
+- Full deployment on Render (frontend + backend).  
 
 ---
 
 ## 🖼️ Screenshots  
 
-### 🌱 Farmer Dashboard  
-![Farmer Dashboard](/assets/farmer-dashboard.png)
+### 🧑‍💼 Admin  
+- **Dashboard Overview**  
+  ![Admin Dashboard](/assets/admindashboard.png)  
+- **Add Product Page**  
+  ![Add Product](/assets/adminaddproduct.png)  
+- **Orders Management**  
+  ![Admin Orders](/assets/adminorders.png)  
 
-### 🛒 Customer Dashboard  
-![Customer Dashboard](/assets/customer-dashboard.png)
+---
 
-### 🧑‍💼 Admin Panel  
-![Admin Panel](/assets/admin-panel.png)
+### 👨‍🌾 Farmer  
+- **Farmer Dashboard**  
+  ![Farmer Dashboard](/assets/farmerdashboard.png)  
+
+---
+
+### 🛒 Customer  
+- **Customer Dashboard**  
+  ![Customer Dashboard](/assets/customerdashboard.png)  
+- **Cart Page**  
+  ![Customer Cart](/assets/customercart.png)  
 
 ---
 
@@ -105,12 +117,10 @@ Deployed using Render 🚀
 
 Frontend: React app hosted as a static site
 
-Backend: Node.js Express API connected to MongoDB Atlas
-
-Auto Deploys from GitHub can be enabled or disabled anytime in Render settings
+Backend: Node.js + Express API connected to MongoDB Atlas
 
 🧠 Environment Variables
-Create a .env file inside backend/:
+Create a .env file inside the backend/ folder:
 
 env
 Copy code
