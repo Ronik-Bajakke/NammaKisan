@@ -124,7 +124,7 @@ Deployed using **Render** 🚀
 
 # 🧠 Environment Variables  
 
-Create a `.env` file inside the **backend/** folder:  
+Create a `.env` file inside the **backend/** folder and add the following:  
 
 ```env
 MONGO_URI=your_mongodb_uri
