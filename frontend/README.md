@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+# 🌾 NammaKisan – Farm-to-Consumer Platform  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Banner](/assets/banner.png)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📖 Overview  
 
-### `npm start`
+**NammaKisan** is a full-stack **Farm-to-Consumer web application** that connects **farmers directly with customers** — eliminating middlemen and ensuring fair prices.  
+Built with **React, Node.js, Express, and MongoDB**, it enables farmers to **list their products**, and customers to **browse, order, and track deliveries** seamlessly.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🔗 **Live Demo (Frontend)**: [NammaKisan on Render](https://your-frontend.onrender.com)  
+🔗 **Live Demo (Backend API)**: [API Endpoint](https://your-backend.onrender.com/api)  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🚀 Features  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 👨‍🌾 Farmer Module  
+- Farmer **sign up / log in** securely  
+- Add new **farm produce** with:
+  - Product name  
+  - Image (Cloudinary upload)  
+  - Price, category, description  
+- View, edit, or delete listed products  
+- Track **orders received** from customers  
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🛒 Customer Module  
+- Customer **sign up / log in**  
+- Browse all available products  
+- Filter by category (**Fruits, Vegetables, Others**)  
+- Add items to cart and place orders  
+- View **order history** and status  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🧑‍💼 Admin Module  
+- View all registered **farmers** and **customers**  
+- Manage **products** and **orders**  
+- Track total delivered orders, customers, and farmers  
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### ⚙️ Other Features  
+- JWT-based authentication for all users  
+- Secure REST API routes  
+- Image uploads via **Cloudinary** + **Multer**  
+- Realtime dashboard for admin insights  
+- Deployed seamlessly on **Render**  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🖼️ Screenshots  
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 🌱 Farmer Dashboard  
+![Farmer Dashboard](/assets/farmer-dashboard.png)
 
-## Learn More
+### 🛒 Customer Dashboard  
+![Customer Dashboard](/assets/customer-dashboard.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 🧑‍💼 Admin Panel  
+![Admin Panel](/assets/admin-panel.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🛠️ Tech Stack  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+| Layer | Technologies Used |
+|--------|--------------------|
+| **Frontend** | React.js, Axios, React Router, CSS |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB with Mongoose |
+| **Authentication** | JWT (JSON Web Token) |
+| **Image Uploads** | Cloudinary + Multer |
+| **Deployment** | Render (Frontend + Backend) |
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🧩 Project Structure  
 
-### Making a Progressive Web App
+```bash
+NammaKisan/
+├── backend/
+│   ├── models/           # Mongoose schemas
+│   ├── routes/           # Express routes (Farmer, Customer, Admin)
+│   ├── middleware/       # Auth middleware
+│   ├── config/           # Cloudinary & MongoDB configs
+│   ├── server.js         # Entry point
+│   └── .env              # Environment variables
+│
+├── frontend/
+│   ├── src/
+│   │   ├── pages/        # React pages (Dashboard, Login, Signup, etc.)
+│   │   ├── components/   # Reusable UI components
+│   │   ├── assets/       # Images, CSS, etc.
+│   │   └── api.js        # API base config
+│   ├── package.json
+│   └── README.md
+│
+└── README.md             # This file
+⚡ Deployment
+Deployed using Render 🚀
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Frontend: React app hosted as a static site
 
-### Advanced Configuration
+Backend: Node.js Express API connected to MongoDB Atlas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Auto Deploys from GitHub can be enabled or disabled anytime in Render settings
 
-### Deployment
+🧠 Environment Variables
+Create a .env file inside backend/:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+env
+Copy code
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+📦 How to Run Locally
+bash
+Copy code
+# Clone repo
+git clone https://github.com/yourusername/namma-kisan.git
 
-### `npm run build` fails to minify
+# Go to backend
+cd backend
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Start backend server
+npm run dev
+# Server will run on http://localhost:5000
+
+# In another terminal, go to frontend
+cd ../frontend
+npm install
+
+# Start frontend
+npm start
+# App will run on http://localhost:3000
+👨‍💻 Author
+Ronik Bajakke
+💼 Aspiring MERN Stack Developer
+🌐 Passionate about building meaningful, farmer-centric web solutions
