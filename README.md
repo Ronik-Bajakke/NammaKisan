@@ -13,6 +13,22 @@ Built with **React, Node.js, Express, and MongoDB**, it enables farmers to **lis
 🔗 **Live Demo (Backend API)**: [API Endpoint](https://nammakisan-backend.onrender.com)  
 
 ---
+## ▶️ Project Demo Video
+
+## Part1
+https://github.com/user-attachments/assets/b77de70a-9323-48de-91c9-e7ae6b171d5e
+
+
+## Part2
+https://github.com/user-attachments/assets/2ff8448d-1eb1-4b6d-8aa4-a792777205cc
+
+
+## Part3
+https://github.com/user-attachments/assets/45665431-ddf5-453e-add6-170cf6c1dd4d
+
+
+
+
 
 ## 🚀 Features  
 
@@ -167,5 +183,8 @@ App will run on http://localhost:3000
 
 💼 Aspiring MERN Stack Developer
 🌐 Passionate about building meaningful, farmer-centric web solutions
+<<<<<<< HEAD
 
 ---
+=======
+>>>>>>> 62aae0fe1963e0df5ec259540a4dcf5d9f0e250b
