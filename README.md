@@ -148,7 +148,6 @@ CLOUDINARY_API_SECRET=your_api_secret
 
 
 ## 💻 How to Run Locally
-
 1. Clone repo
 ```bash
 git clone https://github.com/yourusername/namma-kisan.git
@@ -180,11 +179,6 @@ App will run on http://localhost:3000
 ## 👨‍💻 Author  
 
 **Ronik Bajakke**  
+💼 Aspiring MERN Stack Developer  
+🌐 Passionate about building meaningful, farmer-centric web solutions  
 
-💼 Aspiring MERN Stack Developer
-🌐 Passionate about building meaningful, farmer-centric web solutions
-<<<<<<< HEAD
-
----
-=======
->>>>>>> 62aae0fe1963e0df5ec259540a4dcf5d9f0e250b
