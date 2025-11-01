@@ -92,7 +92,7 @@ Built with **React, Node.js, Express, and MongoDB**, it enables farmers to **lis
 
 ## 🧩 Project Structure  
 
-```bash
+```
 NammaKisan/
 ├── backend/
 │   ├── models/           # Mongoose schemas
@@ -112,19 +112,18 @@ NammaKisan/
 │   └── README.md
 │
 └── README.md             # This file
+```
 
+---
 
-⚡ Deployment
-Deployed using Render 🚀
+## ⚡ Deployment
+- Deployed using Render 🚀
+- Frontend: React app hosted as a static site
+- Backend: Node.js + Express API connected to MongoDB Atlas
 
-Frontend: React app hosted as a static site
+## 🧠 Environment Variables
 
-Backend: Node.js + Express API connected to MongoDB Atlas
-
-
-🧠 Environment Variables
 Create a .env file inside the backend/ folder and add the following:
-
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 CLOUDINARY_CLOUD_NAME=your_cloud_name
@@ -132,32 +131,41 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
 
-💻 How to Run Locally
-bash
-Copy code
-# Clone repo
-git clone https://github.com/yourusername/namma-kisan.git
+## 💻 How to Run Locally
 
-# Go to backend
+1. Clone repo
+```bash
+git clone https://github.com/yourusername/namma-kisan.git
+```
+2. Go to backend
+```bash
 cd backend
 npm install
-
-# Start backend server
+```
+3. Start backend server
+```bash
 npm run dev
-# Server will run on http://localhost:5000
+```
+4. Server will run on http://localhost:5000
+```bash
 Open a new terminal and run the frontend:
-
-bash
-Copy code
-# Go to frontend
+```
+5. Go to frontend
+```bash
 cd ../frontend
 npm install
-
-# Start frontend
+```
+6. Start frontend
+```bash
 npm start
-# App will run on http://localhost:3000
+App will run on http://localhost:3000
+```
 
-👨‍💻 Author
-Ronik Bajakke
+## 👨‍💻 Author  
+
+**Ronik Bajakke**  
+
 💼 Aspiring MERN Stack Developer
 🌐 Passionate about building meaningful, farmer-centric web solutions
+
+---
