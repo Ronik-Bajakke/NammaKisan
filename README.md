@@ -18,7 +18,6 @@ Recruiters and collaborators can:
 - **Email:** `ronikbajakke@gmail.com`  
 - **Password:** `SadalgaNammakisan@591239`  
 
----c:\Users\ronik\OneDrive\Documents\DeltaBackend\NammaKisan\assets
 
 ## 📖 Overview  
 
