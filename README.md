@@ -9,7 +9,7 @@
 **NammaKisan** is a full-stack **Farm-to-Consumer web application** that connects **farmers directly with customers** — eliminating middlemen and ensuring fair prices.  
 Built with **React, Node.js, Express, and MongoDB**, it enables farmers to **list their products**, and customers to **browse, order, and track deliveries** seamlessly.  
 
-🔗 **Live Demo (Frontend)**: [NammaKisan on Render](https://nammakisan-frontend1.onrender.com) 
+🔗 **Live Demo**: [NammaKisan on Render](https://nammakisan-frontend1.onrender.com) 
 
 🧑‍💼 **Demo Admin Login Credentials (for live site)**  
 - **Email:** `ronikbajakke@gmail.com`  
