@@ -30,15 +30,18 @@ Built with **React, Node.js, Express, and MongoDB**, it enables farmers to **lis
 ## ▶️ Project Demo Video
 
 ## Part1
-https://github.com/user-attachments/assets/b77de70a-9323-48de-91c9-e7ae6b171d5e
+https://github.com/user-attachments/assets/2f3c979f-0a68-4976-bd5f-8c99e78878fc
+
 
 
 ## Part2
-https://github.com/user-attachments/assets/2ff8448d-1eb1-4b6d-8aa4-a792777205cc
+https://github.com/user-attachments/assets/95eb8a23-c9bd-4346-aeed-0c974e265436
+
 
 
 ## Part3
-https://github.com/user-attachments/assets/45665431-ddf5-453e-add6-170cf6c1dd4d
+https://github.com/user-attachments/assets/772ae6cf-5f52-45d4-a76d-f4fe2483c201
+
 
 
 
