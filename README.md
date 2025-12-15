@@ -188,9 +188,7 @@ App will run on http://localhost:3000
 
 **Ronik Bajakke**  
 💼 Aspiring MERN Stack Developer  
-🌐 Passionate about building meaningful, farmer-centric web solutions 
-
-**Contact & Links**
-📧 Email: ronikbajakke172913@gmail.com
+🌐 Passionate about building meaningful, farmer-centric web solutions<br> 
+📧 Email: ronikbajakke172913@gmail.com<br>
 🌐 Portfolio: https://portfolio-nine-lyart-56.vercel.app/
 
